@@ -1,7 +1,7 @@
 /*!
  * salt-formatter-js
  * 
- * Version: 0.6.1 - 2017-06-23T20:18:23.026Z
+ * Version: 0.6.1 - 2017-06-23T20:40:14.730Z
  * License: Apache-2.0
  */
 
@@ -16,6 +16,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
   var hoverPreviewEnabled = false;
   var hoverPreviewArrayCount = 100;
   var hoverPreviewFieldCount = 5;
+  var stringWrap = false;
 
   return {
     get hoverPreviewEnabled() {
@@ -38,12 +39,19 @@ angular.module('saltFormatter', ['RecursionHelper'])
     set hoverPreviewFieldCount(value) {
       hoverPreviewFieldCount = parseInt(value, 10);
     },
+    get stringWrap() {
+      return stringWrap;
+    },
+    set stringWrap(value) {
+      hoverPreviewFieldCount = parseInt(value, 10);
+    },
 
     $get: function () {
       return {
         hoverPreviewEnabled: hoverPreviewEnabled,
         hoverPreviewArrayCount: hoverPreviewArrayCount,
-        hoverPreviewFieldCount: hoverPreviewFieldCount
+        hoverPreviewFieldCount: hoverPreviewFieldCount,
+        stringWrap: stringWrap
       };
     }
   };
@@ -177,7 +185,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
         scope.isOpen && !scope.isArray();
     };
 
-
+    scope.stringWrap = !!SaltFormatterConfig.stringWrap && scope.type == 'string';
     // If 'open' attribute is present
     scope.isOpen = !!scope.open;
     scope.toggleOpen = function () {
@@ -350,4 +358,4 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
   };
 }]);
 
-angular.module("saltFormatter").run(["$templateCache", function($templateCache) {$templateCache.put("salt-formatter.html","<div success-fail-highlight=\"\" ng-init=\"isOpen = open && open > 0\" class=\"salt-formatter-row\"><a ng-click=\"toggleOpen()\"><span class=\"toggler {{isOpen ? \'open\' : \'\'}}\" ng-if=\"isObject()\"></span> <span class=\"key\" ng-if=\"hasKey\"><span class=\"key-text\">{{key}}</span><span class=\"colon\">:</span></span> <span class=\"value\"><span ng-if=\"isObject()\"><span class=\"constructor-name\">{{getConstructorName(json)}}</span> <span ng-if=\"isArray()\"><span class=\"bracket\">[</span><span class=\"number\">{{json.length}}</span><span class=\"bracket\">]</span></span></span> <span ng-if=\"!isObject()\" ng-click=\"openLink(isUrl)\" class=\"{{type}}\" ng-class=\"{date: isDate, url: isUrl}\">{{parseValue(json)}}</span></span> <span ng-if=\"showThumbnail()\" class=\"thumbnail-text\">{{getThumbnail()}}</span></a><div class=\"children\" ng-if=\"getKeys().length && isOpen\"><salt-formatter ng-repeat=\"key in getKeys() track by $index\" json=\"json[key]\" key=\"key\" open=\"childrenOpen()\"></salt-formatter></div><div class=\"children empty object\" ng-if=\"isEmptyObject()\"></div><div class=\"children empty array\" ng-if=\"getKeys() && !getKeys().length && isOpen && isArray()\"></div></div>");}]);
+angular.module("saltFormatter").run(["$templateCache", function($templateCache) {$templateCache.put("salt-formatter.html","<div success-fail-highlight=\"\" ng-init=\"isOpen = open && open > 0\" class=\"salt-formatter-row\"><a ng-click=\"toggleOpen()\"><span class=\"toggler {{isOpen ? \'open\' : \'\'}}\" ng-if=\"isObject()\"></span> <span class=\"key\" ng-if=\"hasKey\"><span class=\"key-text\">{{key}}</span><span class=\"colon\">:</span></span> <span class=\"value\"><span ng-if=\"isObject()\"><span class=\"constructor-name\">{{getConstructorName(json)}}</span> <span ng-if=\"isArray()\"><span class=\"bracket\">[</span><span class=\"number\">{{json.length}}</span><span class=\"bracket\">]</span></span></span> <span ng-if=\"!isObject()\" ng-click=\"openLink(isUrl)\" class=\"{{type}}\" ng-class=\"{date: isDate, url: isUrl, wrap: stringWrap}\">{{parseValue(json)}}</span></span> <span ng-if=\"showThumbnail()\" class=\"thumbnail-text\">{{getThumbnail()}}</span></a><div class=\"children\" ng-if=\"getKeys().length && isOpen\"><salt-formatter ng-repeat=\"key in getKeys() track by $index\" json=\"json[key]\" key=\"key\" open=\"childrenOpen()\"></salt-formatter></div><div class=\"children empty object\" ng-if=\"isEmptyObject()\"></div><div class=\"children empty array\" ng-if=\"getKeys() && !getKeys().length && isOpen && isArray()\"></div></div>");}]);

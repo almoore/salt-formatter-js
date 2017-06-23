@@ -8,6 +8,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
   var hoverPreviewEnabled = false;
   var hoverPreviewArrayCount = 100;
   var hoverPreviewFieldCount = 5;
+  var stringWrap = false;
 
   return {
     get hoverPreviewEnabled() {
@@ -30,12 +31,19 @@ angular.module('saltFormatter', ['RecursionHelper'])
     set hoverPreviewFieldCount(value) {
       hoverPreviewFieldCount = parseInt(value, 10);
     },
+    get stringWrap() {
+      return stringWrap;
+    },
+    set stringWrap(value) {
+      hoverPreviewFieldCount = parseInt(value, 10);
+    },
 
     $get: function () {
       return {
         hoverPreviewEnabled: hoverPreviewEnabled,
         hoverPreviewArrayCount: hoverPreviewArrayCount,
-        hoverPreviewFieldCount: hoverPreviewFieldCount
+        hoverPreviewFieldCount: hoverPreviewFieldCount,
+        stringWrap: stringWrap
       };
     }
   };
@@ -169,7 +177,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
         scope.isOpen && !scope.isArray();
     };
 
-
+    scope.stringWrap = !!SaltFormatterConfig.stringWrap && scope.type == 'string';
     // If 'open' attribute is present
     scope.isOpen = !!scope.open;
     scope.toggleOpen = function () {

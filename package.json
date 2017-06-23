@@ -1,6 +1,6 @@
 {
   "name": "salt-formatter-js",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Angular Publishable Directive Boilerplate",
   "main": "dist/salt-formatter.js",
   "repository": "git@github.com:almoore/salt-formatter-js.git",

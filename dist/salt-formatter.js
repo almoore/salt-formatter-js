@@ -1,7 +1,7 @@
 /*!
  * salt-formatter-js
  * 
- * Version: 0.6.0 - 2016-08-27T12:58:03.306Z
+ * Version: 0.6.1 - 2017-06-23T20:18:23.026Z
  * License: Apache-2.0
  */
 
@@ -48,7 +48,27 @@ angular.module('saltFormatter', ['RecursionHelper'])
     }
   };
 })
+.directive('successFailHighlight', function(){
 
+    return function ($scope, $element, $attr) {
+        function checkSuccess(){
+            if ($element && 'json' in $attr) {
+                var json = $scope['json'];
+                if (angular.isObject(json)) {
+                    if(('result' in json ) ) {
+                        if (json.result) {
+                            $element.addClass('success');
+                        } else if ( json.result === false ) {
+                            $element.addClass('fail');
+                        }
+                    }
+                }
+
+            }
+        }
+        checkSuccess();
+    };
+})
 .directive('saltFormatter', ['RecursionHelper', 'SaltFormatterConfig', function saltFormatterDirective(RecursionHelper, SaltFormatterConfig) {
   function escapeString(str) {
     return str.replace('"', '\"');
@@ -66,11 +86,11 @@ angular.module('saltFormatter', ['RecursionHelper'])
         return 'Object';
     }
 
-    //ES6 default gives name to constructor 
+    //ES6 default gives name to constructor
     if (object.__proto__ !== undefined && object.__proto__.constructor !== undefined && object.__proto__.constructor.name !== undefined) {
       return object.__proto__.constructor.name;
-    } 
-       
+    }
+
     var funcNameRegex = /function (.{1,})\(/;
     var results = (funcNameRegex).exec((object).constructor.toString());
     if (results && results.length > 1) {
@@ -231,10 +251,11 @@ angular.module('saltFormatter', ['RecursionHelper'])
 }]);
 
 // Export to CommonJS style imports. Exporting this string makes this valid:
-// angular.module('myApp', [require('salt-formatter-js')]);
+// angular.module('myApp', [require('saltFormatter')]);
 if (typeof module === 'object') {
   module.exports = 'saltFormatter';
 }
+
 'use strict';
 
 // from http://stackoverflow.com/a/18609594
@@ -281,4 +302,52 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
   };
 }]);
 
-angular.module("saltFormatter").run(["$templateCache", function($templateCache) {$templateCache.put("salt-formatter.html","<div ng-init=\"isOpen = open && open > 0\" class=\"salt-formatter-row\"><a ng-click=\"toggleOpen()\"><span class=\"toggler {{isOpen ? \'open\' : \'\'}}\" ng-if=\"isObject()\"></span> <span class=\"key\" ng-if=\"hasKey\"><span class=\"key-text\">{{key}}</span><span class=\"colon\">:</span></span> <span class=\"value\"><span ng-if=\"isObject()\"><span class=\"constructor-name\">{{getConstructorName(json)}}</span> <span ng-if=\"isArray()\"><span class=\"bracket\">[</span><span class=\"number\">{{json.length}}</span><span class=\"bracket\">]</span></span></span> <span ng-if=\"!isObject()\" ng-click=\"openLink(isUrl)\" class=\"{{type}}\" ng-class=\"{date: isDate, url: isUrl}\">{{parseValue(json)}}</span></span> <span ng-if=\"showThumbnail()\" class=\"thumbnail-text\">{{getThumbnail()}}</span></a><div class=\"children\" ng-if=\"getKeys().length && isOpen\"><salt-formatter ng-repeat=\"key in getKeys() track by $index\" json=\"json[key]\" key=\"key\" open=\"childrenOpen()\"></salt-formatter></div><div class=\"children empty object\" ng-if=\"isEmptyObject()\"></div><div class=\"children empty array\" ng-if=\"getKeys() && !getKeys().length && isOpen && isArray()\"></div></div>");}]);
+angular.module("saltFormatter").run(["$templateCache", function($templateCache) {$templateCache.put("salt-formatter.html","<div success-fail-highlight=\"\" ng-init=\"isOpen = open && open > 0\" class=\"salt-formatter-row\"><a ng-click=\"toggleOpen()\"><span class=\"toggler {{isOpen ? \'open\' : \'\'}}\" ng-if=\"isObject()\"></span> <span class=\"key\" ng-if=\"hasKey\"><span class=\"key-text\">{{key}}</span><span class=\"colon\">:</span></span> <span class=\"value\"><span ng-if=\"isObject()\"><span class=\"constructor-name\">{{getConstructorName(json)}}</span> <span ng-if=\"isArray()\"><span class=\"bracket\">[</span><span class=\"number\">{{json.length}}</span><span class=\"bracket\">]</span></span></span> <span ng-if=\"!isObject()\" ng-click=\"openLink(isUrl)\" class=\"{{type}}\" ng-class=\"{date: isDate, url: isUrl}\">{{parseValue(json)}}</span></span> <span ng-if=\"showThumbnail()\" class=\"thumbnail-text\">{{getThumbnail()}}</span></a><div class=\"children\" ng-if=\"getKeys().length && isOpen\"><salt-formatter ng-repeat=\"key in getKeys() track by $index\" json=\"json[key]\" key=\"key\" open=\"childrenOpen()\"></salt-formatter></div><div class=\"children empty object\" ng-if=\"isEmptyObject()\"></div><div class=\"children empty array\" ng-if=\"getKeys() && !getKeys().length && isOpen && isArray()\"></div></div>");}]);
+
+'use strict';
+
+// from http://stackoverflow.com/a/18609594
+angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', function($compile){
+  return {
+    /**
+     * Manually compiles the element, fixing the recursion loop.
+     * @param element
+     * @param [link] A post-link function, or an object with function(s)
+     * registered via pre and post properties.
+     * @returns An object containing the linking functions.
+     */
+    compile: function(element, link){
+      // Normalize the link parameter
+      if(angular.isFunction(link)){
+        link = { post: link };
+      }
+
+      // Break the recursion loop by removing the contents
+      var contents = element.contents().remove();
+      var compiledContents;
+      return {
+        pre: (link && link.pre) ? link.pre : null,
+        /**
+         * Compiles and re-adds the contents
+         */
+        post: function(scope, element){
+          // Compile the contents
+          if(!compiledContents){
+            compiledContents = $compile(contents);
+          }
+          // Re-add the compiled contents to the element
+          compiledContents(scope, function(clone){
+            element.append(clone);
+          });
+
+          // Call the post-linking function, if any
+          if(link && link.post){
+            link.post.apply(null, arguments);
+          }
+        }
+      };
+    }
+  };
+}]);
+
+angular.module("saltFormatter").run(["$templateCache", function($templateCache) {$templateCache.put("salt-formatter.html","<div success-fail-highlight=\"\" ng-init=\"isOpen = open && open > 0\" class=\"salt-formatter-row\"><a ng-click=\"toggleOpen()\"><span class=\"toggler {{isOpen ? \'open\' : \'\'}}\" ng-if=\"isObject()\"></span> <span class=\"key\" ng-if=\"hasKey\"><span class=\"key-text\">{{key}}</span><span class=\"colon\">:</span></span> <span class=\"value\"><span ng-if=\"isObject()\"><span class=\"constructor-name\">{{getConstructorName(json)}}</span> <span ng-if=\"isArray()\"><span class=\"bracket\">[</span><span class=\"number\">{{json.length}}</span><span class=\"bracket\">]</span></span></span> <span ng-if=\"!isObject()\" ng-click=\"openLink(isUrl)\" class=\"{{type}}\" ng-class=\"{date: isDate, url: isUrl}\">{{parseValue(json)}}</span></span> <span ng-if=\"showThumbnail()\" class=\"thumbnail-text\">{{getThumbnail()}}</span></a><div class=\"children\" ng-if=\"getKeys().length && isOpen\"><salt-formatter ng-repeat=\"key in getKeys() track by $index\" json=\"json[key]\" key=\"key\" open=\"childrenOpen()\"></salt-formatter></div><div class=\"children empty object\" ng-if=\"isEmptyObject()\"></div><div class=\"children empty array\" ng-if=\"getKeys() && !getKeys().length && isOpen && isArray()\"></div></div>");}]);

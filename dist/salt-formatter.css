@@ -1,7 +1,7 @@
 /*!
  * salt-formatter-js
  * 
- * Version: 0.6.0 - 2016-08-27T12:58:03.339Z
+ * Version: 0.6.1 - 2017-06-23T20:18:23.029Z
  * License: Apache-2.0
  */
 
@@ -32,6 +32,9 @@
   color: green;
   white-space: pre;
   word-wrap: break-word;
+}
+.salt-formatter-row .string.wrap {
+  white-space: normal;
 }
 .salt-formatter-row .number {
   color: blue;
@@ -89,6 +92,12 @@
 .salt-formatter-row:hover > a > .thumbnail-text {
   opacity: 0.6;
 }
+.salt-formatter-row.success {
+  border: solid #00DD00;
+}
+.salt-formatter-row.fail {
+  border: solid red;
+}
 .salt-formatter-dark.salt-formatter-row {
   font-family: monospace;
 }
@@ -115,6 +124,9 @@
   color: #31F031;
   white-space: pre;
   word-wrap: break-word;
+}
+.salt-formatter-dark.salt-formatter-row .string.wrap {
+  white-space: normal;
 }
 .salt-formatter-dark.salt-formatter-row .number {
   color: #66C2FF;

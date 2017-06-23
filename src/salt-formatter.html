@@ -1,4 +1,4 @@
-<div ng-init="isOpen = open && open > 0" class="salt-formatter-row">
+<div success-fail-highlight="" ng-init="isOpen = open && open > 0" class="salt-formatter-row">
   <a ng-click="toggleOpen()">
     <span class="toggler {{isOpen ? 'open' : ''}}" ng-if="isObject()"></span>
     <span class="key" ng-if="hasKey"><span class="key-text">{{key}}</span><span class="colon">:</span></span>

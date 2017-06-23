@@ -37,6 +37,9 @@
     color: @string-color;
     white-space: pre;
     word-wrap: break-word;
+    &.wrap {
+        white-space: normal;
+    }
   }
   .number { color: @number-color; }
   .boolean { color: @boolean-color; }
@@ -91,6 +94,12 @@
 
 .salt-formatter-row {
   .theme();
+  &.success {
+      border: solid #00DD00;
+  }
+  &.fail {
+      border: solid red;
+  }
 }
 
 .salt-formatter-dark.salt-formatter-row {

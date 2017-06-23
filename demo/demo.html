@@ -1,0 +1,258 @@
+<!doctype html>
+<html ng-app="demo">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS directive demo</title>
+
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../dist/salt-formatter.min.css"></div>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body ng-controller="MainCtrl">
+  <div class="container">
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li class="active"><a ng-href="https://github.com/mohsen1/salt-formatter">Code in GitHub</a></li>
+    </ul>
+    <h1 class="text-muted">&lt;salt-formatter&gt;</h1>
+    <p>
+      <iframe src="http://ghbtns.com/github-btn.html?user=mohsen1&repo=salt-formatter&type=watch&size=large&count=true"
+      allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+      <iframe src="http://ghbtns.com/github-btn.html?user=mohsen1&repo=salt-formatter&type=fork&size=large&count=true"
+      allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+    </p>
+  </div>
+
+  <div class="row marketing">
+    <h4>About</h4>
+    <p>
+      JSON Formatter is an AngularJS directive for rendering JSON objects in HTML with a collapsible navigation.
+    </p>
+    <h4>How to use</h4>
+    <p>Install via Bower<p>
+      <p><code>bower install salt-formatter --save</code></p>
+      <p>Add <code>saltFormatter</code> to your app dependencies</p>
+      <p>
+        <pre>angular.module('myApp', ['saltFormatter'])</pre>
+      </p>
+      <p>Use <code>&lt;salt-formatter&gt;</code> directive</p>
+      <p>
+        <pre>&lt;salt-formatter open="1" json="{my: 'json'}"&gt;&lt;/salt-formatter&gt;</pre>
+      </p>
+      <p><code>open</code> attribute accepts a number that indicated how many levels JSON should be open</p>
+
+      <h4>Configuration</h4>
+      <p>You can set following configurations via <code>JSONFormatterConfig</code> provider.</p>
+      <p>Changing these configurations will impact all demos</p>
+      <ul>
+        <li>
+          <label>
+            <code>hoverPreviewEnabled</code>
+            <input type="checkbox" ng-model="hoverPreviewEnabled">
+          </label>
+        </li>
+        <li>
+          <label>
+            <code>hoverPreviewArrayCount</code>
+            <input type="number" ng-model="hoverPreviewArrayCount" ng-disabled="!hoverPreviewEnabled">
+          </label>
+        </li>
+        <li>
+          <label>
+            <code>hoverPreviewFieldCount</code>
+            <input type="number" ng-model="hoverPreviewFieldCount" ng-disabled="!hoverPreviewEnabled">
+          </label>
+        </li>
+      </ul>
+
+      <h4>Demo</h4>
+      <div class="tests">
+        <div class="result">
+          <salt-formatter json="complex" open="1"></salt-formatter>
+        </div>
+      </div>
+
+      <h4>Live JSON</h4>
+      <div class="result">
+          <textarea ng-model="textarea" class="col-xs-6"></textarea>
+          <div class="col-xs-6">
+              <salt-formatter json="textareaJson" open="1"></salt-formatter>
+          </div>
+      </div>
+
+      <h4 id="examples">Other Examples</h4>
+      <div class="tests">
+        <div class="group">
+
+          <h4>Null</h4>
+          <div class="result">
+            <salt-formatter open="1" json='null'></salt-formatter>
+          </div>
+
+          <h4>Undefined</h4>
+          <div class="result">
+            <salt-formatter open="1" json='undef'></salt-formatter>
+          </div>
+
+          <h4>Number</h4>
+          <div class="result">
+            <salt-formatter open="1" json='42'></salt-formatter>
+          </div>
+
+          <h4>String</h4>
+          <div class="result">
+            <salt-formatter open="1" json='"Hello world!"'></salt-formatter>
+          </div>
+
+          <h4>Date String</h4>
+          <div class="result">
+            <salt-formatter open="1" json='"Sun Aug 03 2014 15:03:26 GMT-0700 (PDT)"'></salt-formatter>
+          </div>
+
+          <h4>URL String</h4>
+          <div class="result">
+            <salt-formatter open="1" json='"https://github.com/mohsen1/salt-formatter"'></salt-formatter>
+          </div>
+
+          <h4>Function</h4>
+          <div class="result">
+            <salt-formatter open="1" json="fn"></salt-formatter>
+          </div>
+
+          <h4>Empty object</h4>
+          <div class="result">
+            <salt-formatter open="1" json="{}"></salt-formatter>
+          </div>
+
+          <h4>Empty array</h4>
+          <div class="result">
+            <salt-formatter open="1" json="[]"></salt-formatter>
+          </div>
+
+          <h4>Object with one key</h4>
+          <div class="result">
+            <salt-formatter open="1" json="{me: 1}"></salt-formatter>
+          </div>
+
+          <h4>Nested Object</h4>
+          <div class="result">
+            <salt-formatter open="1" json="{me: {you: 2}}"></salt-formatter>
+          </div>
+
+          <h4>Array</h4>
+          <div class="result">
+            <salt-formatter open="1" json="['one', 'two', 'three']"></salt-formatter>
+          </div>
+
+          <h4>Complex Object</h4>
+          <div class="result">
+            <salt-formatter open="1" json='complex'></salt-formatter>
+          </div>
+
+          <h4>Object with long key</h4>
+          <div class="result">
+            <salt-formatter open="1" json ='{
+            "a_very_llllllllllllllllllllllllllllllllong_key": {m3:1},
+          }
+          '></salt-formatter>
+          </div>
+
+          <h4>Object with empty key</h4>
+          <div class="result">
+            <salt-formatter open="1" json ='{"": {m3:1},}'></salt-formatter>
+          </div>
+
+        <h4>Dates</h4>
+        <div class="result">
+          <salt-formatter open="1" json='{
+          "Date.toJSON": "2014-08-03T21:44:46.490Z",
+          "newDate": "Sun Aug 03 2014 14:44:46 GMT-0700 (PDT)",
+          "Date.now": 1407102492243
+        }'></salt-formatter>
+      </div>
+
+      <h4>Long String content</h4>
+      <div class="result">
+        <salt-formatter open="1" json='{
+        "long": "Slow-carb hella vegan, Bushwick flexitarian Portland roof party photo booth forage. Fixie try-hard gastropub Etsy single-origin coffee bitters. Crucifix sartorial squid, bitters chillwave before they sold out farm-to-table mustache direct trade \ndeep v bicycle rights Austin bespoke. Odd Future sriracha Thundercats whatever pork belly Marfa, mumblecore gluten-free dreamcatcher. Dreamcatcher next level polaroid mustache fap gentrify typewriter. PBR Shoreditch cred, pug narwhal slow-carb seitan. Bushwick +1 banjo, chia flexitarian keytar retro PBR&B cred."
+      }'></salt-formatter>
+    </div>
+
+    <h4>HTML content</h4>
+    <div class="result">
+      <salt-formatter open="1" json='{html: "<h1>H1 Heading</h1>"}'></salt-formatter>
+    </div>
+
+    <h4>Opened 1 level</h4>
+    <div class="result">
+      <salt-formatter json='deep' open=""></salt-formatter>
+    </div>
+
+    <h4>Opened 2 level</h4>
+    <div class="result">
+      <salt-formatter json='deep' open="2"></salt-formatter>
+    </div>
+
+    <h4>Opened 3 level</h4>
+    <div class="result">
+      <salt-formatter json='deep' open="3"></salt-formatter>
+    </div>
+
+    <h4>Opened 4 level</h4>
+    <div class="result">
+      <salt-formatter json='deep' open="4"></salt-formatter>
+    </div>
+
+    <h4>Custom constructors</h4>
+    <div class="result">
+      <salt-formatter open="1" json='person'></salt-formatter>
+    </div>
+
+    <h4><code>ng-repeat</code></h4>
+    <p>If you are iterating in an array of objects, make sure you are using <code>track by $index</code> to avoid adding extra <code>$$hashKey</code> to your objects.</p>
+    <h5>With <code>track by $index</code></h5>
+    <div class="result">
+      <salt-formatter ng-repeat="item in randArray1 track by $index" json="item"></salt-formatter>
+    </div>
+    <h5>Without <code>track by $index</code></h5>
+    <div class="result">
+      <salt-formatter ng-repeat="item in randArray2" json="item"></salt-formatter>
+    </div>
+
+    <h4>Dark theme</h4>
+    <p>To use dark theme add <code>salt-formatter-dark</code> class this directive. Note that <code>salt-formatter-dark</code> class make text and other elements lighter so they look good on a dark background.</p>
+    <div class="result dark">
+      <salt-formatter open="1" json='complex' class="salt-formatter-dark"></salt-formatter>
+    </div>
+
+    <h4>Altering JSON object</h4>
+    <label>
+      <input type="checkbox" ng-model="c">
+      <span>Alternate <code>json</code></span>
+    </label>
+    <div class="result">
+      <salt-formatter json="c ? alternate1 : alternate2" open="1"></salt-formatter>
+    </div>
+
+    <h4>Giant JSON</h4>
+    <p>(for performance testing)</p>
+    <label>
+      <button ng-click="fetchGiantJSON()">Fetch</button>
+    </label>
+    <div class="result" ng-init="giantOpen = 1;">
+      <salt-formatter json="giant" open="100"></salt-formatter>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <p>License Apache 2</p>
+</div>
+
+</div>
+<script src="../dist/salt-formatter.min.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>

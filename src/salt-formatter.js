@@ -35,7 +35,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
       return stringWrap;
     },
     set stringWrap(value) {
-      hoverPreviewFieldCount = parseInt(value, 10);
+      stringWrap = !!value;
     },
 
     $get: function () {

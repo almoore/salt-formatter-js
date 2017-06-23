@@ -1,7 +1,7 @@
 /*!
  * salt-formatter-js
  * 
- * Version: 0.6.1 - 2017-06-23T20:40:14.730Z
+ * Version: 0.6.1 - 2017-06-23T20:45:23.797Z
  * License: Apache-2.0
  */
 
@@ -43,7 +43,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
       return stringWrap;
     },
     set stringWrap(value) {
-      hoverPreviewFieldCount = parseInt(value, 10);
+      stringWrap = !!value;
     },
 
     $get: function () {

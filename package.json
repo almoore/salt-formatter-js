@@ -1,9 +1,9 @@
 {
-  "name": "jsonformatter",
+  "name": "salt-formatter-js",
   "version": "0.6.0",
   "description": "Angular Publishable Directive Boilerplate",
   "main": "dist/salt-formatter.js",
-  "repository": "git@github.com:mohsen1/salt-formatter.git",
+  "repository": "git@github.com:almoore/salt-formatter-js.git",
   "scripts": {
     "test": "./node_modules/gulp/bin/gulp.js test"
   },

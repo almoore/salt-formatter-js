@@ -1,19 +1,19 @@
 var app = angular.module('demo', ['ngSanitize', 'saltFormatter']);
 
-app.controller('MainCtrl', function ($scope, $http, JSONFormatterConfig) {
+app.controller('MainCtrl', function ($scope, $http, SaltFormatterConfig) {
 
-  $scope.hoverPreviewEnabled = JSONFormatterConfig.hoverPreviewEnabled;
-  $scope.hoverPreviewArrayCount = JSONFormatterConfig.hoverPreviewArrayCount;
-  $scope.hoverPreviewFieldCount = JSONFormatterConfig.hoverPreviewFieldCount;
+  $scope.hoverPreviewEnabled = SaltFormatterConfig.hoverPreviewEnabled;
+  $scope.hoverPreviewArrayCount = SaltFormatterConfig.hoverPreviewArrayCount;
+  $scope.hoverPreviewFieldCount = SaltFormatterConfig.hoverPreviewFieldCount;
 
   $scope.$watch('hoverPreviewEnabled', function(newValue){
-    JSONFormatterConfig.hoverPreviewEnabled = newValue;
+    SaltFormatterConfig.hoverPreviewEnabled = newValue;
   });
   $scope.$watch('hoverPreviewArrayCount', function(newValue){
-    JSONFormatterConfig.hoverPreviewArrayCount = newValue;
+    SaltFormatterConfig.hoverPreviewArrayCount = newValue;
   });
   $scope.$watch('hoverPreviewFieldCount', function(newValue){
-    JSONFormatterConfig.hoverPreviewFieldCount = newValue;
+    SaltFormatterConfig.hoverPreviewFieldCount = newValue;
   });
 
   $scope.undef = undefined;

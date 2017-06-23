@@ -18,7 +18,7 @@ Salt Formatter is an AngularJS directive for rendering JSON objects in HTML with
   ...or
 
   ```bash
-  npm install jsonformatter --save
+  npm install salt-formatter-js --save
   ```
 * Add `saltFormatter` to your app dependencies
 
@@ -34,7 +34,7 @@ Salt Formatter is an AngularJS directive for rendering JSON objects in HTML with
 
 #### Configuration
 
-You can use `JSONFormatterConfig` provider to configure JOSN Formatter.
+You can use `SaltFormatterConfig` provider to configure JSON Formatter.
 
 Available configurations
 
@@ -46,10 +46,10 @@ Available configurations
 Example using configuration
 
 ```js
-app.config(function (JSONFormatterConfigProvider) {
+app.config(function (SaltFormatterConfigProvider) {
 
   // Enable the hover preview feature
-  JSONFormatterConfigProvider.hoverPreviewEnabled = true;
+  SaltFormatterConfigProvider.hoverPreviewEnabled = true;
 });
 ```
 

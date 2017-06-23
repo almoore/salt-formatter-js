@@ -1,7 +1,7 @@
 'use strict';
 
 describe('salt-formatter', function () {
-  var scope, $compile, $rootScope, element, fakeModule, JSONFormatterConfig;
+  var scope, $compile, $rootScope, element, fakeModule, SaltFormatterConfig;
 
   function createDirective(key, open) {
     open = open === undefined ? 0 : open;
@@ -61,8 +61,8 @@ describe('salt-formatter', function () {
   beforeEach(function () {
     fakeModule = angular
       .module('test.saltFormatter', ['saltFormatter', 'ngSanitize'])
-      .config(['JSONFormatterConfigProvider', function (_JSONFormatterConfig_) {
-        JSONFormatterConfig = _JSONFormatterConfig_;
+      .config(['SaltFormatterConfigProvider', function (_SaltFormatterConfig_) {
+        SaltFormatterConfig = _SaltFormatterConfig_;
       }]);
     module('test.saltFormatter', 'saltFormatter', 'ngSanitize');
   });
@@ -233,7 +233,7 @@ describe('salt-formatter', function () {
 
       describe('set enable', function () {
         beforeEach(function () {
-          JSONFormatterConfig.hoverPreviewEnabled = true;
+          SaltFormatterConfig.hoverPreviewEnabled = true;
         });
 
         it('should render "simple object"', function () {

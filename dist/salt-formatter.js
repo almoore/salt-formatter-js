@@ -1,5 +1,5 @@
 /*!
- * jsonformatter
+ * salt-formatter-js
  * 
  * Version: 0.6.0 - 2016-08-27T12:58:03.306Z
  * License: Apache-2.0
@@ -10,7 +10,7 @@
 
 angular.module('saltFormatter', ['RecursionHelper'])
 
-.provider('JSONFormatterConfig', function JSONFormatterConfigProvider() {
+.provider('SaltFormatterConfig', function SaltFormatterConfigProvider() {
 
   // Default values for hover preview config
   var hoverPreviewEnabled = false;
@@ -49,7 +49,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
   };
 })
 
-.directive('saltFormatter', ['RecursionHelper', 'JSONFormatterConfig', function saltFormatterDirective(RecursionHelper, JSONFormatterConfig) {
+.directive('saltFormatter', ['RecursionHelper', 'SaltFormatterConfig', function saltFormatterDirective(RecursionHelper, SaltFormatterConfig) {
   function escapeString(str) {
     return str.replace('"', '\"');
   }
@@ -181,14 +181,14 @@ angular.module('saltFormatter', ['RecursionHelper'])
     };
 
     scope.showThumbnail = function () {
-      return !!JSONFormatterConfig.hoverPreviewEnabled && scope.isObject() && !scope.isOpen;
+      return !!SaltFormatterConfig.hoverPreviewEnabled && scope.isObject() && !scope.isOpen;
     };
 
     scope.getThumbnail = function () {
       if (scope.isArray()) {
 
         // if array length is greater then 100 it shows "Array[101]"
-        if (scope.json.length > JSONFormatterConfig.hoverPreviewArrayCount) {
+        if (scope.json.length > SaltFormatterConfig.hoverPreviewArrayCount) {
           return 'Array[' + scope.json.length + ']';
         } else {
           return '[' + scope.json.map(getPreview).join(', ') + ']';
@@ -198,7 +198,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
         var keys = scope.getKeys();
 
         // the first five keys (like Chrome Developer Tool)
-        var narrowKeys = keys.slice(0, JSONFormatterConfig.hoverPreviewFieldCount);
+        var narrowKeys = keys.slice(0, SaltFormatterConfig.hoverPreviewFieldCount);
 
         // json value schematic information
         var kvs = narrowKeys
@@ -231,7 +231,7 @@ angular.module('saltFormatter', ['RecursionHelper'])
 }]);
 
 // Export to CommonJS style imports. Exporting this string makes this valid:
-// angular.module('myApp', [require('jsonformatter')]);
+// angular.module('myApp', [require('salt-formatter-js')]);
 if (typeof module === 'object') {
   module.exports = 'saltFormatter';
 }

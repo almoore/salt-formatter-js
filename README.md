@@ -1,6 +1,6 @@
 # Salt Formatter
-[![Build Status](https://travis-ci.org/almoore/salt-formatter.svg?branch=master)](https://travis-ci.org/mohsen1/salt-formatter)
-[![Code Climate](https://codeclimate.com/almoore/mohsen1/salt-formatter/badges/gpa.svg)](https://codeclimate.com/github/mohsen1/salt-formatter)
+[![Build Status](https://travis-ci.org/almoore/salt-formatter-js.svg?branch=master)](https://travis-ci.org/almoore/salt-formatter-js)
+[![Code Climate](https://codeclimate.com/almoore/salt-formatter-js/badges/gpa.svg)](https://codeclimate.com/github/almoore/salt-formatte-js)
 
 Salt Formatter is an AngularJS directive for rendering JSON objects in HTML with a **collapsible** navigation.
 
